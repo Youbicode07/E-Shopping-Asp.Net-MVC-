@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Product>
+
+ 
+<h6>Bienvenue sur notre application e-shopping, votre destination numérique ultime pour une expérience de shopping exceptionnelle</h6>
+
+</br>
+<div class="w-100 mt-4 d-flex flex-wrap ">
+    @foreach (var item in Model)
+    {
+        <div class="card mx-3 mb-4" style="width: 13rem;">
+            <img style="width:100%;height:200px" src="~/Image/@item.Image" class="card-img-top" alt="...">
+            <br />
+            <div class="card-body">
+                <h5 class="card-title">@item.Name</h5>
+                <br />
+                <p class="card-text">
+                    <b>Price: </b>@item.Price <br />
+                 
+                    <b>Color: </b>@item.ProductColor <br />
+                </p>
+                <button type="button" onclick="add('@item.Id')" class="btn btn-primary">Add to cart</button>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        async function add(ProductId) {
+            var usernameEl = document.getElementById("username");
+            if (usernameEl == null) {
+                window.location.href = "/Identity/Account/Login";
+                return; // Ensure no further execution after redirect
+            }
+            try {
+                var response = await fetch(`/Cart/AddItem?ProductId=${ProductId}`);
+                if (response.status == 200) {
+                    var result = await response.json();
+                    var cartCountEl = document.getElementById("cartCount");
+                    if (cartCountEl) {
+                        cartCountEl.innerHTML = result;
+                        window.location.href = "#cartCount";
+                    }
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    </script>
+}
+
+ 

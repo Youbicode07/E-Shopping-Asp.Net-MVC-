@@ -1,0 +1,52 @@
+﻿@model ShoppingCart
+
+
+<div style="width:90%;margin:auto" class="mt-2">
+    @if (Model != null && Model.CartDetails != null && Model.CartDetails.Count > 0)
+    {
+        <h2>My Cart</h2>
+
+        <table class="table table-striped">
+            <tr>
+                <th>Product</th>
+                <th>Image</th>
+                <th>ProductType</th>
+                <th>Unit Price</th>
+                <th>Total Price</th>
+                <th>Action</th>
+            </tr>
+            @foreach (var item in Model.CartDetails)
+            {
+                <tr>
+                    <td>@item.Product.Name</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.Product.Image))
+                        {
+                            <img src="/Image/@item.Product.Image" style="width:80px;height:100px" />
+                        }
+                    </td>
+                    <td>@item.Product.ProductTypes.ProductType</td>
+                    <td>@item.Product.Price X @item.Quantity</td>
+                    <td>@(item.Product.Price * item.Quantity)</td>
+                    <td>
+                        <a class="btn btn-info" href="/Cart/AddItem?ProductId=@item.ProductId&qty=1">+</a>
+                        <a class="btn btn-info" href="/cart/removeitem?Productid=@item.ProductId">-</a>
+                    </td>
+                </tr>
+            }
+        </table>
+
+        <div class="my-2">
+            <h5>Total(MAD): </h5>
+            @Model.CartDetails.Select(item => item.Product.Price * item.Quantity).Sum()
+        </div>
+
+        <div class="my-2">
+            <a class="btn btn-primary" href="/Cart/Checkout">Checkout</a>
+        </div>
+    }
+    else
+    {
+        <h5>Cart is empty</h5>
+    }
+</div>

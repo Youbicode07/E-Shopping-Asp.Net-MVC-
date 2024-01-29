@@ -1,0 +1,129 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>E-Shopping</title>
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+	<link href="~/css/css2/font-awesome.min.css" rel="stylesheet" />
+ 
+	<link href="~/css/css2/nouislider.min.css" rel="stylesheet" />
+	<link href="~/css/bootstrap22.min (1).css" rel="stylesheet" />
+ 
+	<link href="~/css/css2/style.css" rel="stylesheet" />
+</head>
+<body>
+  
+    <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/Home/Index">E-Shopping</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/Home/Index">
+                            Home
+                            <span class="visually-hidden">(current)</span>
+                        </a>
+                    </li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link " href="/Products/Index"> Produit  </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="/ProductTypes/Index"> ProductTypes  </a>
+                        </li>
+                    }
+                     
+                    <li class="nav-item"><a class="nav-link" href="/UserOrder/UserOrders">My Orders</a></li>
+                </ul>
+             
+                <partial name="_LoginPartial" />
+            </div>
+        </div>
+    </nav>
+    </br>
+    </br>
+    </br>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script>
+    loadCartCount();
+    async function loadCartCount() {
+        try {
+            var response = await fetch(`/Cart/GetTotalItemInCart`);
+            console.log(response)
+            if (response.status == 200) {
+                var result = await response.json();
+                var cartCountEl = document.getElementById("cartCount");
+                cartCountEl.innerHTML = result;
+            }
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+</script>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br></br>
+<!-- FOOTER -->
+<footer id="footer">
+	<!-- top footer -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<div class="col-md-3 col-xs-6">
+					<div class="footer">
+						<h3 class="footer-title">About Us</h3>
+						<p></p>
+						<ul class="footer-links">
+							<li><a href="#"><i class="fa fa-map-marker"></i>Casablanca - Morocco </a></li>
+							<li><a href="#"><i class="fa fa-phone"></i>+212 07-58-96-21</a></li>
+							<li><a href="#"><i class="fa fa-envelope-o"></i>E-Shopping@email.com</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="col-md-3 col-xs-6">
+					<div class="footer">
+						<h3 class="footer-title">Categories</h3>
+						<ul class="footer-links">
+                            <li><a href="/Home/Index">Hot deals</a></li>
+                            <li><a href="/Home/Index">Laptops</a></li>
+                            <li><a href="/Home/Index">Smartphones</a></li>
+                            <li><a href="/Home/Index">Cameras</a></li>
+						 
+						</ul>
+					</div>
+				</div>
+
+				<div class="clearfix visible-xs"></div>
+
+				 
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	 
+	 
+</footer>
+<!-- /FOOTER -->
+</html>
+
+@await RenderSectionAsync("Scripts", required: false)s", required: false)
